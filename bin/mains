@@ -3,6 +3,8 @@ require_relative("../lib/player")
 require_relative("../lib/logic")
 
 class GameLogic
+  include Logic
+
   def greeting
     puts "Welcome to Tic_Tac_Toe game"
     puts "Enter Player-One name"
@@ -47,7 +49,15 @@ class GameLogic
 
   def player1_turn
     puts "Its #{@first_player.name} turn"
-    @selected_cell = gets.chomp
+    @selected_cell = gets.chomp.to_i
+    loop do
+      if validate_selected_cell(@selected_cell) == false
+        puts "Only put valid number please"
+        @selected_cell = gets.chomp.to_i
+      else
+        break if validate_selected_cell(@selected_cell) == true
+      end
+    end
   end
 end
 
