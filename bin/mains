@@ -1,32 +1,33 @@
 #!/usr/bin/env ruby
-require_relative('../lib/player')
+require_relative("../lib/player")
+require_relative("../lib/logic")
 
 class GameLogic
   def greeting
-    puts 'Welcome to Tic_Tac_Toe game'
-    puts 'Enter Player-One name'
+    puts "Welcome to Tic_Tac_Toe game"
+    puts "Enter Player-One name"
 
     @player1 = gets.chomp.capitalize
     until Player.validate_name(@player1)
-      puts 'Name is too short, please try again'
+      puts "Name is too short, please try again"
       @player1 = gets.chomp.capitalize
     end
-    puts 'Select your Icon'
+    puts "Select your Icon"
     @player1_icon = gets.chomp
     until Player.validate_icons(@player1_icon)
-      puts 'Please Enter a valid Icon'
+      puts "Please Enter a valid Icon"
       @player1_icon = gets.chomp.upcase
     end
-    puts 'Enter Player-Two Name'
+    puts "Enter Player-Two Name"
     @player2 = gets.chomp
     until Player.validate_name(@player2)
-      puts 'Name is too short, please try again'
+      puts "Name is too short, please try again"
       @player2 = gets.chomp.capitalize
     end
-    puts 'Select your Icon'
+    puts "Select your Icon"
     @player2_icon = gets.chomp
     until Player.validate_icons(@player2_icon)
-      puts 'Please Enter a valid Icon'
+      puts "Please Enter a valid Icon"
       @player2_icon = gets.chomp.upcase
     end
     @first_player = Player.new(@player1)
@@ -35,17 +36,18 @@ class GameLogic
 
   def board
     my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    puts '+----+------+-----+-----+'
+    puts "+----+------+-----+-----+"
     puts "|   #{my_array[0]}   |   #{my_array[1]}   |   #{my_array[2]}   "
-    puts '+----+------+-----+-----+'
+    puts "+----+------+-----+-----+"
     puts "|   #{my_array[3]}   |   #{my_array[4]}   |   #{my_array[5]}   "
-    puts '+----+------+-----+-----+'
+    puts "+----+------+-----+-----+"
     puts "|   #{my_array[6]}   |   #{my_array[7]}   |   #{my_array[8]}   "
-    puts '+----+------+-----+-----+'
+    puts "+----+------+-----+-----+"
   end
 
   def player1_turn
     puts "Its #{@first_player.name} turn"
+    @selected_cell = gets.chomp
   end
 end
 
