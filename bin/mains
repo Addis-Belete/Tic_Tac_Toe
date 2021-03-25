@@ -1,2 +1,55 @@
 #!/usr/bin/env ruby
-puts "hello world"
+require_relative('../lib/player')
+
+class GameLogic
+  def greeting
+    puts 'Welcome to Tic_Tac_Toe game'
+    puts 'Enter Player-One name'
+
+    @player1 = gets.chomp.capitalize
+    until Player.validate_name(@player1)
+      puts 'Name is too short, please try again'
+      @player1 = gets.chomp.capitalize
+    end
+    puts 'Select your Icon'
+    @player1_icon = gets.chomp
+    until Player.validate_icons(@player1_icon)
+      puts 'Please Enter a valid Icon'
+      @player1_icon = gets.chomp.upcase
+    end
+    puts 'Enter Player-Two Name'
+    @player2 = gets.chomp
+    until Player.validate_name(@player2)
+      puts 'Name is too short, please try again'
+      @player2 = gets.chomp.capitalize
+    end
+    puts 'Select your Icon'
+    @player2_icon = gets.chomp
+    until Player.validate_icons(@player2_icon)
+      puts 'Please Enter a valid Icon'
+      @player2_icon = gets.chomp.upcase
+    end
+    @first_player = Player.new(@player1)
+    @second_player = Player.new(@player2)
+  end
+
+  def board
+    my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    puts '+----+------+-----+-----+'
+    puts "|   #{my_array[0]}   |   #{my_array[1]}   |   #{my_array[2]}   "
+    puts '+----+------+-----+-----+'
+    puts "|   #{my_array[3]}   |   #{my_array[4]}   |   #{my_array[5]}   "
+    puts '+----+------+-----+-----+'
+    puts "|   #{my_array[6]}   |   #{my_array[7]}   |   #{my_array[8]}   "
+    puts '+----+------+-----+-----+'
+  end
+
+  def player1_turn
+    puts "Its #{@first_player.name} turn"
+  end
+end
+
+game = GameLogic.new
+game.greeting
+game.board
+game.player1_turn
