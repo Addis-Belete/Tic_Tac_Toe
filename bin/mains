@@ -8,6 +8,9 @@ class GameLogic
   def initialize
     @player1_selected_cell = []
     @player2_selected_cell = []
+    @winning_combos = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
+                       [2, 5, 8], [3, 6, 9], [1, 5, 9],
+                       [3, 5, 6]]
   end
 
   def greeting
