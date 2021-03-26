@@ -42,13 +42,13 @@ class GameLogic
   end
 
   def board
-    my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    @my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     puts "+----+------+-----+-----+"
-    puts "|   #{my_array[0]}   |   #{my_array[1]}   |   #{my_array[2]}   "
+    puts "|   #{@my_array[0]}   |   #{@my_array[1]}   |   #{@my_array[2]}   "
     puts "+----+------+-----+-----+"
-    puts "|   #{my_array[3]}   |   #{my_array[4]}   |   #{my_array[5]}   "
+    puts "|   #{@my_array[3]}   |   #{@my_array[4]}   |   #{@my_array[5]}   "
     puts "+----+------+-----+-----+"
-    puts "|   #{my_array[6]}   |   #{my_array[7]}   |   #{my_array[8]}   "
+    puts "|   #{@my_array[6]}   |   #{@my_array[7]}   |   #{@my_array[8]}   "
     puts "+----+------+-----+-----+"
   end
 
@@ -63,6 +63,10 @@ class GameLogic
         break if validate_selected_cell(@selected_cell) == true
       end
     end
+    if validate_selected_cell(@selected_cell) == true
+      @player1_selected_cell.push(@selected_cell)
+      print @player1_selected_cell
+    end
   end
 
   def player2_turn
@@ -73,7 +77,7 @@ class GameLogic
         puts "Only put valid number please"
         @selected_cell2 = gets.chomp.to_i
       else
-        break if validate_selected_cell(@selected_cell2) == true
+        break if validate_selected_cell(@selected_cell2) == true && @player2_selected_cell << @selected_cell2
       end
     end
   end
