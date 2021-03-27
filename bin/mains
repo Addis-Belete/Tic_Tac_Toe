@@ -38,7 +38,8 @@ class GameLogic
     end
     puts 'Select your Icon'
     @player2_icon = gets.chomp
-    until Player.validate_icons(@player2_icon)
+    until Player.validate_icons(@player2_icon) &&
+          Player.validate_icon(@player2_icon, @player1_icon)
       puts 'Please Enter a valid Icon'
       @player2_icon = gets.chomp.upcase
     end
