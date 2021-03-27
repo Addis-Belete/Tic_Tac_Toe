@@ -105,6 +105,7 @@ class GameLogic
       winner2_name
       break if @win == true
     end
+    draw unless @win == true
   end
 
   def winner1_name
@@ -114,9 +115,18 @@ class GameLogic
   def winner2_name
     puts "#{@second_player.name} is winner #{@first_player.name} Try again" if winner == true
   end
+
+  def draw
+    puts "#{@first_player.name} & #{@second_player.name} Draw"
+    board
+  end
+
+  def play
+    greeting
+    board
+    move
+  end
 end
 
 game = GameLogic.new
-game.greeting
-game.board
-game.move
+game.play
