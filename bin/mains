@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require_relative("../lib/player")
 require_relative("../lib/logic")
+require_relative("../lib/board")
 
 class GameLogic
   include Logic
@@ -42,10 +43,10 @@ class GameLogic
     end
     @first_player = Player.new(@player1)
     @second_player = Player.new(@player2)
+    @my_array = Board.new(@first_player, @second_player).my_array
   end
 
   def board
-    @my_array = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     puts "+----+------+-----+-----+"
     puts "|   #{@my_array[0]}   |   #{@my_array[1]}   |   #{@my_array[2]}   "
     puts "+----+------+-----+-----+"
@@ -53,6 +54,7 @@ class GameLogic
     puts "+----+------+-----+-----+"
     puts "|   #{@my_array[6]}   |   #{@my_array[7]}   |   #{@my_array[8]}   "
     puts "+----+------+-----+-----+"
+    @my_array
   end
 
   def player1_turn
@@ -63,8 +65,8 @@ class GameLogic
         puts "Only put valid number please"
         @selected_cell = gets.chomp.to_i
       elsif validate_selected_cell(@selected_cell) == true
-        @player1_selected_cell.unshift(@selected_cell)
-        print @player1_selected_cell
+        @player1_selected_cell << @selected_cell
+        puts @player1_selected_cell
         break
       end
     end
@@ -79,7 +81,8 @@ class GameLogic
         @selected_cell2 = gets.chomp.to_i
       elsif validate_selected_cell(@selected_cell2) == true
         @player2_selected_cell.push(@selected_cell2)
-        print @player2_selected_cell
+        change_icon(@selected_cell2, @player2_icon)
+        puts @player2_icon
         break
       end
     end

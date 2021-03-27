@@ -25,4 +25,10 @@ module Logic
       end
     end
   end
+
+  def change_icon(selected_cell, icon)
+    target = @my_array.find { |element| element == selected_cell }
+    @my_array[target - 1] = icon
+    board
+  end
 end
