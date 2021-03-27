@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
-require_relative("../lib/player")
-require_relative("../lib/logic")
-require_relative("../lib/board")
+
+require_relative('../lib/player')
+require_relative('../lib/logic')
+require_relative('../lib/board')
 
 class GameLogic
   include Logic
@@ -15,30 +16,30 @@ class GameLogic
   end
 
   def greeting
-    puts "Welcome to Tic_Tac_Toe game"
-    puts "Enter Player-One name"
+    puts 'Welcome to Tic_Tac_Toe game'
+    puts 'Enter Player-One name'
 
     @player1 = gets.chomp.capitalize
     until Player.validate_name(@player1)
-      puts "Name is too short, please try again"
+      puts 'Name is too short, please try again'
       @player1 = gets.chomp.capitalize
     end
-    puts "Select your Icon"
+    puts 'Select your Icon'
     @player1_icon = gets.chomp
     until Player.validate_icons(@player1_icon)
-      puts "Please Enter a valid Icon"
+      puts 'Please Enter a valid Icon'
       @player1_icon = gets.chomp.upcase
     end
-    puts "Enter Player-Two Name"
+    puts 'Enter Player-Two Name'
     @player2 = gets.chomp
     until Player.validate_name(@player2)
-      puts "Name is too short, please try again"
+      puts 'Name is too short, please try again'
       @player2 = gets.chomp.capitalize
     end
-    puts "Select your Icon"
+    puts 'Select your Icon'
     @player2_icon = gets.chomp
     until Player.validate_icons(@player2_icon)
-      puts "Please Enter a valid Icon"
+      puts 'Please Enter a valid Icon'
       @player2_icon = gets.chomp.upcase
     end
     @first_player = Player.new(@player1)
@@ -47,13 +48,13 @@ class GameLogic
   end
 
   def board
-    puts "+----+------+-----+-----+"
+    puts '+----+------+-----+-----+'
     puts "|   #{@my_array[0]}   |   #{@my_array[1]}   |   #{@my_array[2]}   "
-    puts "+----+------+-----+-----+"
+    puts '+----+------+-----+-----+'
     puts "|   #{@my_array[3]}   |   #{@my_array[4]}   |   #{@my_array[5]}   "
-    puts "+----+------+-----+-----+"
+    puts '+----+------+-----+-----+'
     puts "|   #{@my_array[6]}   |   #{@my_array[7]}   |   #{@my_array[8]}   "
-    puts "+----+------+-----+-----+"
+    puts '+----+------+-----+-----+'
     @my_array
   end
 
@@ -62,7 +63,7 @@ class GameLogic
     @selected_cell = gets.chomp.to_i
     loop do
       if validate_selected_cell(@selected_cell) == false
-        puts "Only put valid number please"
+        puts 'Only put valid number please'
         @selected_cell = gets.chomp.to_i
       elsif validate_selected_cell(@selected_cell) == true
         @player1_selected_cell << @selected_cell
@@ -77,7 +78,7 @@ class GameLogic
     @selected_cell2 = gets.chomp.to_i
     loop do
       if validate_selected_cell(@selected_cell2) == false
-        puts "Only put valid number please"
+        puts 'Only put valid number please'
         @selected_cell2 = gets.chomp.to_i
       elsif validate_selected_cell(@selected_cell2) == true
         @player2_selected_cell.push(@selected_cell2)
@@ -94,22 +95,23 @@ class GameLogic
       player1_turn
       turn += 1
       winner
+      winner1_name
       break if turn == 9 || @win == true
+
       player2_turn
       turn += 1
       winner
+      winner2_name
       break if @win == true
     end
   end
 
   def winner1_name
-    puts "#{@first_player.name} is winner"
-    puts "#{@second_player.name} Try again"
+    puts "#{@first_player.name} is winner #{@second_player.name} Try again" if winner == true
   end
 
   def winner2_name
-    puts "#{@second_player.name} is winner"
-    puts "#{@first_player.name} Try again"
+    puts "#{@second_player.name} is winner #{@first_player.name} Try again" if winner == true
   end
 end
 
