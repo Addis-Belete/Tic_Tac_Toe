@@ -10,20 +10,15 @@ module Logic
     end
   end
 
-  def winner1
+  def winner
     @winning_combos.each do |win|
-      if win - @player1_selected_cell = []
-        true
+      if win - @player1_selected_cell == []
+        @win = true
+      elsif win - @player2_selected_cell == []
+        @win = true
       end
     end
-  end
-
-  def winner2
-    @winning_combos.each do |win|
-      if win - @player1_selected_cell = []
-        true
-      end
-    end
+    @win
   end
 
   def change_icon(selected_cell, icon)

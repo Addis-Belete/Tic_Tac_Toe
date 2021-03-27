@@ -66,7 +66,7 @@ class GameLogic
         @selected_cell = gets.chomp.to_i
       elsif validate_selected_cell(@selected_cell) == true
         @player1_selected_cell << @selected_cell
-        puts @player1_selected_cell
+        change_icon(@selected_cell, @player1_icon)
         break
       end
     end
@@ -82,7 +82,7 @@ class GameLogic
       elsif validate_selected_cell(@selected_cell2) == true
         @player2_selected_cell.push(@selected_cell2)
         change_icon(@selected_cell2, @player2_icon)
-        puts @player2_icon
+
         break
       end
     end
@@ -92,22 +92,24 @@ class GameLogic
     turn = 0
     until turn > 9
       player1_turn
-      if winner1 == true
-        winner1_name
-        break
-      end
+      turn += 1
+      winner
+      break if turn == 9 || @win == true
       player2_turn
-      if winner2 == true
-        winner1_name
-        break
-      end
-      turn += 2
+      turn += 1
+      winner
+      break if @win == true
     end
   end
 
   def winner1_name
     puts "#{@first_player.name} is winner"
     puts "#{@second_player.name} Try again"
+  end
+
+  def winner2_name
+    puts "#{@second_player.name} is winner"
+    puts "#{@first_player.name} Try again"
   end
 end
 
