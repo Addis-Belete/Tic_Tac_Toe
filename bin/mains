@@ -1,2 +1,136 @@
 #!/usr/bin/env ruby
-puts "hello world"
+
+require_relative("../lib/player")
+require_relative("../lib/logic")
+require_relative("../lib/board")
+
+class GameLogic
+  include Logic
+
+  def initialize
+    @player2_selected_cell = []
+    @player1_selected_cell = []
+    @winning_combos = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7],
+                       [2, 5, 8], [3, 6, 9], [1, 5, 9],
+                       [3, 5, 6]]
+  end
+
+  def greeting
+    puts "Welcome to Tic_Tac_Toe game"
+    puts "Enter Player-One name"
+
+    @player1 = gets.chomp.capitalize
+    until Player.validate_name(@player1)
+      puts "Name is too short, please try again"
+      @player1 = gets.chomp.capitalize
+    end
+    puts "Select your Icon"
+    @player1_icon = gets.chomp.upcase
+    until Player.validate_icons(@player1_icon)
+      puts "Please Enter a valid Icon"
+      @player1_icon = gets.chomp.upcase
+    end
+    puts "Enter Player-Two Name"
+    @player2 = gets.chomp
+    until Player.validate_name(@player2)
+      puts "Name is too short, please try again"
+      @player2 = gets.chomp.capitalize
+    end
+    puts "Select your Icon"
+    @player2_icon = gets.chomp.upcase
+    until Player.validate_icons(@player2_icon) &&
+          Player.validate_icon(@player2_icon, @player1_icon)
+      puts "Please Enter a valid Icon"
+      @player2_icon = gets.chomp.upcase
+    end
+    @first_player = Player.new(@player1)
+    @second_player = Player.new(@player2)
+    @my_array = Board.new(@first_player, @second_player).my_array
+  end
+
+  puts
+  puts "Lets Start!"
+  puts
+
+  def board
+    puts "+----+------+-----+-----+"
+    puts "|   #{@my_array[0]}   |   #{@my_array[1]}   |   #{@my_array[2]}   "
+    puts "+----+------+-----+-----+"
+    puts "|   #{@my_array[3]}   |   #{@my_array[4]}   |   #{@my_array[5]}   "
+    puts "+----+------+-----+-----+"
+    puts "|   #{@my_array[6]}   |   #{@my_array[7]}   |   #{@my_array[8]}   "
+    puts "+----+------+-----+-----+"
+    @my_array
+  end
+
+  def player1_turn
+    puts "Its #{@first_player.name} turn"
+    @selected_cell = gets.chomp.to_i
+    loop do
+      if validate_selected_cell(@selected_cell) == false
+        puts "Only put valid number please"
+        @selected_cell = gets.chomp.to_i
+      elsif validate_selected_cell(@selected_cell) == true
+        @player1_selected_cell << @selected_cell
+        change_icon(@selected_cell, @player1_icon)
+        break
+      end
+    end
+  end
+
+  def player2_turn
+    puts "Its #{@second_player.name} turn"
+    @selected_cell2 = gets.chomp.to_i
+    loop do
+      if validate_selected_cell(@selected_cell2) == false
+        puts "Only put valid number please"
+        @selected_cell2 = gets.chomp.to_i
+      elsif validate_selected_cell(@selected_cell2) == true
+        @player2_selected_cell.push(@selected_cell2)
+        change_icon(@selected_cell2, @player2_icon)
+
+        break
+      end
+    end
+  end
+
+  def move
+    turn = 0
+    until turn > 9
+      player1_turn
+      turn += 1
+      winner
+      winner1_name
+      break if turn == 9 || @win == true
+
+      player2_turn
+      turn += 1
+      winner
+      winner2_name
+      break if @win == true
+    end
+    draw unless @win == true
+  end
+
+  def winner1_name
+    puts "#{@first_player.name} is winner #{@second_player.name} Try again" if winner == true
+  end
+
+  def winner2_name
+    puts "#{@second_player.name} is winner #{@first_player.name} Try again" if winner == true
+  end
+
+  def draw
+    puts "#{@first_player.name} & #{@second_player.name} Draw"
+    board
+  end
+
+  def play
+    greeting
+    board
+    move
+  end
+end
+
+game = GameLogic.new
+game.play
